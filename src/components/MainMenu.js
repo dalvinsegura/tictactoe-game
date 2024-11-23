@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { theme } from "../../theme";
 
 const MainMenu = ({ onSelectMode }) => {
   return (
@@ -26,25 +27,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1a1a1a",
+    backgroundColor: theme.colors.background,
   },
   title: {
     fontSize: 40,
-    color: "#fff",
+    color: theme.colors.primary,
     fontWeight: "bold",
+    fontFamily: theme.fonts.bold,
     marginBottom: 40,
   },
   button: {
-    backgroundColor: "#fff8",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
+    backgroundColor: theme.colors.secondary,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 10,
     marginVertical: 10,
+    elevation: 3,
   },
   buttonText: {
-    color: "#1a1a1a",
+    color: theme.colors.textDark,
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: theme.fonts.bold,
   },
 });
 
