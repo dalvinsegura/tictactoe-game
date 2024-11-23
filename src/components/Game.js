@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { theme } from "../../theme";
+import { makeAIMove } from "../utils/ai";
 
 const WINNING_COMBINATIONS = [
   [0, 1, 2],
@@ -20,7 +21,11 @@ const Game = ({ mode, onBackToMenu }) => {
 
   useEffect(() => {
     checkWinner();
-  }, [board]);
+    if (mode === "ai" && currentPlayer === "O" && !winner) {
+      const aiMove = makeAIMove(board);
+      handleCellPress(aiMove);
+    }
+  }, [board, currentPlayer, mode]);
 
   const handleCellPress = (index) => {
     if (board[index] || winner) return;
@@ -55,7 +60,11 @@ const Game = ({ mode, onBackToMenu }) => {
       key={index}
       style={styles.cell}
       onPress={() => handleCellPress(index)}
-      disabled={!!board[index] || !!winner}
+      disabled={
+        !!board[index] || !!winner || (mode === "ai" && currentPlayer === "O")
+      }
+      accessibilityLabel={`Celda ${index + 1}, ${board[index] || "vacía"}`}
+      accessibilityHint="Toca para marcar esta celda"
     >
       <Text
         style={[
@@ -96,10 +105,20 @@ const Game = ({ mode, onBackToMenu }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={resetGame}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={resetGame}
+          accessibilityLabel="Reiniciar juego"
+          accessibilityHint="Toca para comenzar un nuevo juego"
+        >
           <Text style={styles.buttonText}>Reiniciar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={onBackToMenu}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={onBackToMenu}
+          accessibilityLabel="Volver al menú principal"
+          accessibilityHint="Toca para regresar al menú de selección de modo"
+        >
           <Text style={styles.buttonText}>Menú Principal</Text>
         </TouchableOpacity>
       </View>
