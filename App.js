@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
+import { theme } from "./theme";
 import MainMenu from "./src/components/MainMenu";
 import Game from "./src/components/Game";
-
-import { theme } from "./theme";
 
 export default function App() {
   const [gameMode, setGameMode] = useState(null);
@@ -12,10 +11,14 @@ export default function App() {
     setGameMode(mode);
   };
 
+  const handleBackToMenu = () => {
+    setGameMode(null);
+  };
+
   return (
     <View style={styles.container}>
       {gameMode ? (
-        <Game mode={gameMode} onBackToMenu={() => setGameMode(null)} />
+        <Game mode={gameMode} onBackToMenu={handleBackToMenu} />
       ) : (
         <MainMenu onSelectMode={handleSelectMode} />
       )}
